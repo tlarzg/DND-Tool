@@ -6,11 +6,11 @@
   
   <select id="getUserCredentialByName" resultType="CredentialDTO">
     SELECT
-        id,
+        USER_id,
         username,
         salt,
         hash
-    FROM credential
+    FROM user
     WHERE username = #{userName}
   </select>
   
