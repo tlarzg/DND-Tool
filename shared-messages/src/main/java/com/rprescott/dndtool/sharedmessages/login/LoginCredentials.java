@@ -6,9 +6,9 @@ public class LoginCredentials implements Serializable {
 
     private static final long serialVersionUID = -1053376166491854400L;
     private String userName;
-    private String password;
+    private char[] password;
 
-    public LoginCredentials(String userName, String password) {
+    public LoginCredentials(String userName, char[] password) {
         this.userName = userName;
         this.password = password;
     }
@@ -21,11 +21,11 @@ public class LoginCredentials implements Serializable {
         this.userName = userName;
     }
 
-    public String getPassword() {
+    public char[] getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(char[] password) {
         this.password = password;
     }
 

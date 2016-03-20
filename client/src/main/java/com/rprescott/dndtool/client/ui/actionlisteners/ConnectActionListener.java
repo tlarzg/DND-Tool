@@ -13,6 +13,10 @@ import javax.swing.JTextField;
 import com.rprescott.dndtool.client.connection.ConnectionService;
 import com.rprescott.dndtool.client.ui.authentication.AuthenticationScreen;
 
+/**
+ * Action listener to be invoked when attempting to connect to the server.
+ * Upon successful connection, the authentication screen is brought up. 
+ */
 public class ConnectActionListener implements ActionListener {
     
     private JTextField hostName;
@@ -25,6 +29,10 @@ public class ConnectActionListener implements ActionListener {
         this.port = port;
     }
 
+    /**
+     * Performs the required actions when the "Connect" button is clicked. Upon successful connection, the authentication
+     * screen is brought up.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         try {

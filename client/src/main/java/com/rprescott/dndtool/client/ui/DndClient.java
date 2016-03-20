@@ -11,7 +11,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import com.rprescott.dndtool.client.ui.actionlisteners.ConfigureActionListener;
-import com.rprescott.dndtool.client.ui.login.LoginScreen;
 
 import net.miginfocom.swing.MigLayout;
 

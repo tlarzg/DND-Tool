@@ -5,8 +5,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 
+/**
+ * Utility to obtain the external IPv4 address of the current machine. 
+ */
 public class IpChecker {
 
+    /**
+     * Obtains the external IPv4 address of the current machine.
+     * 
+     * @return The IPv4 address or <b>null</b> if the service is offline.
+     */
     public static String getIp() {
         BufferedReader input = null;
         String ip = null;
@@ -16,7 +24,7 @@ public class IpChecker {
             ip = input.readLine();
         }
         catch (Exception e) {
-            
+            e.printStackTrace();
         }
         finally {
             if (input != null) {

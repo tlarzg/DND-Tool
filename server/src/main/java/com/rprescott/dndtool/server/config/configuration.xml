@@ -11,4 +11,8 @@
   	<setting name="mapUnderscoreToCamelCase" value="true"/> 
   </settings>
   
+  <typeAliases>
+        <typeAlias alias="CredentialDTO" type="com.rprescott.dndtool.server.database.login.CredentialDTO"/>
+  </typeAliases>
+  
 </configuration>

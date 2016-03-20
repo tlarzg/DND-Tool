@@ -63,6 +63,12 @@
 			<artifactId>spring-context</artifactId>
 			<version>4.2.4.RELEASE</version>
 		</dependency>
+		
+	    <dependency>
+            <groupId>dnd-tool</groupId>
+            <artifactId>shared-messages</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
 
 		<dependency>
 			<groupId>org.mybatis</groupId>

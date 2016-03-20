@@ -4,6 +4,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ThreadPoolExecutor;
 
+/**
+ * Utility to periodically count the number of active threads in the specified ThreadPoolExecutor.
+ */
 public class ThreadPoolPrinter {
     
     private Timer timer;
@@ -14,7 +17,6 @@ public class ThreadPoolPrinter {
     }
     
     private class ActiveThreadCounterTask extends TimerTask {
-        
         private ThreadPoolExecutor threadPool;
         
         public ActiveThreadCounterTask(ThreadPoolExecutor threadPool) {
