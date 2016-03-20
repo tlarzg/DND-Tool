@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import com.rprescott.dndtool.sharedmessages.login.LoginCredentials;
+
 public class LoginActionListener implements ActionListener {
     
     private JTextField userNameField;
@@ -21,10 +23,10 @@ public class LoginActionListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String userName = userNameField.getText();
-        // TODO: This is bad bad bad. This is temporary just to get objects serialized across things.
-        String password = new String(passwordField.getPassword());
-        System.out.println("Submitting login request with Username: " + userName + " and Password: " + password);
+        // TODO: This is a bad bad way to do passwords. This is temporary just to get objects serialized across things.
+        //       ... I'll salt and hash it eventually.
+        LoginCredentials credentials = new LoginCredentials(userNameField.getText(), new String(passwordField.getPassword()));
+        System.out.println("Submitting login request with Username: " + credentials.getUserName() + " and Password: " + credentials.getPassword());
     }
 
 }
