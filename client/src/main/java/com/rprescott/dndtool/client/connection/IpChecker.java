@@ -1,4 +1,4 @@
-package com.rprescott.dndtool.client;
+package com.rprescott.dndtool.client.connection;
 
 import java.io.BufferedReader;
 import java.io.IOException;

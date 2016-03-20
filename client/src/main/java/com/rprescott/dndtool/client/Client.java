@@ -7,6 +7,8 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import com.rprescott.dndtool.client.connection.IpChecker;
+
 public class Client {
     
     private Socket clientSocket;

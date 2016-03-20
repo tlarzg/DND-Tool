@@ -1,7 +1,6 @@
 package com.rprescott.dndtool.server;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.DataInputStream;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.net.SocketException;
@@ -24,12 +23,11 @@ public class ClientWorkerThread implements Runnable {
     @Override
     public void run() {
         try {
-            BufferedReader input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-
+            DataInputStream input = new DataInputStream(clientSocket.getInputStream());
             // Just convert the first line of the input into a String and print it out onto the server console.
             while (true) {
                 System.out.println("Executing on thread: " + Thread.currentThread().getName());
-                String clientInputString = input.readLine();
+                int clientInputString = input.readInt();
                 System.out.println("Received message from client: " + clientInputString);
 
                 // The client is probably waiting for a server response. Let's send a message to the client to inform it

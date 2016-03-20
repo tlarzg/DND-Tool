@@ -1,28 +1,42 @@
-package com.rprescott.dndtool.client.ui;
+package com.rprescott.dndtool.client.ui.login;
+
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.AbstractDocument;
 
-import com.rprescott.dndtool.client.IpChecker;
+import com.rprescott.dndtool.client.Constants;
+import com.rprescott.dndtool.client.connection.IpChecker;
 import com.rprescott.dndtool.client.ui.actionlisteners.ConnectActionListener;
 import com.rprescott.dndtool.client.ui.documentfilters.NumericDocumentFilter;
 
 import net.miginfocom.swing.MigLayout;
 
-public class LoginScreen extends JPanel {
+public class LoginScreen extends JFrame {
 
     private static final long serialVersionUID = 6893583669278934306L;
+    private JPanel contentPanel;
     private MigLayout layout;
     private JTextField hostnameTextField;
     private JTextField portTextField;
     
-    public LoginScreen() {
+    public LoginScreen(String version) {
+        contentPanel = new JPanel();
         layout = new MigLayout();
-        this.setLayout(layout);
+        contentPanel.setLayout(layout);
         addContent();
+        Dimension screenDimensions = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setTitle(Constants.VERSION);
+        this.setSize((int) (screenDimensions.getWidth() * 0.15), (int) (screenDimensions.getHeight() * 0.15));
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        this.add(contentPanel);
+        this.setVisible(true);
     }
 
     private void addContent() {
@@ -36,8 +50,8 @@ public class LoginScreen extends JPanel {
         hostnameTextField = new JTextField(15);
         // Set the default text of the hostname to be the local network's external IP address.
         hostnameTextField.setText(IpChecker.getIp());
-        this.add(hostnameLabel);
-        this.add(hostnameTextField, "wrap");
+        contentPanel.add(hostnameLabel);
+        contentPanel.add(hostnameTextField, "wrap");
     }
 
     private void addPortSection() {
@@ -45,13 +59,13 @@ public class LoginScreen extends JPanel {
         portTextField = new JTextField(15);
         portTextField.setText("8080");
         ((AbstractDocument) portTextField.getDocument()).setDocumentFilter(new NumericDocumentFilter());
-        this.add(portLabel);
-        this.add(portTextField, "wrap");
+        contentPanel.add(portLabel);
+        contentPanel.add(portTextField, "wrap");
     }
     
     private void addConnectButton() {
         JButton connectButton = new JButton("Connect");
-        connectButton.addActionListener(new ConnectActionListener(hostnameTextField.getText(), Integer.valueOf(portTextField.getText())));
-        this.add(connectButton);
+        connectButton.addActionListener(new ConnectActionListener(this, hostnameTextField, portTextField));
+        contentPanel.add(connectButton);
     }
 }

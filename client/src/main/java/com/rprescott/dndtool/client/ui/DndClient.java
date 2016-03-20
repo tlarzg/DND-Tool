@@ -11,6 +11,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import com.rprescott.dndtool.client.ui.actionlisteners.ConfigureActionListener;
+import com.rprescott.dndtool.client.ui.login.LoginScreen;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -44,9 +45,7 @@ public class DndClient extends JFrame {
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.add(contentPanel);
-        setMainContent(new LoginScreen());
         this.setVisible(true);
-        //setMainContent(new LoginScreen());
     }
     
     private void createMenuBar() {
