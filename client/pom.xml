@@ -57,6 +57,13 @@
 			<version>LATEST</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+		  <groupId>com.miglayout</groupId>
+		  <artifactId>miglayout-swing</artifactId>
+		  <version>5.0</version>
+		</dependency>
+		
 	</dependencies>
 
 </project>

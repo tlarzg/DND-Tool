@@ -1,49 +1,44 @@
 package com.rprescott.dndtool.server;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
+import com.rprescott.dndtool.server.utils.ThreadPoolPrinter;
 
 
 public class Server {
     
-    public void run() {
+    private static final int NUM_THREADS_IN_POOL = 2;
+    private ServerSocket serverSocket;
+    
+    /** Thread pool of fixed size. */
+    // TODO: Grab value from config file / database table.
+    private ThreadPoolExecutor threadPool;
+
+    
+    public void run() throws IOException {
+        threadPool = new ThreadPoolExecutor(NUM_THREADS_IN_POOL, NUM_THREADS_IN_POOL, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
+        new ThreadPoolPrinter(threadPool, 5);
+        // Creating a new ServerSocket. The argument is an integer which is the port number to accept
+        // requests on.
+        // TODO: Grab port value from config file / database table.
+        serverSocket = new ServerSocket(1337);
         while (true) {
-            ServerSocket serverSocket = null;
-            try {
-                // Creating a new ServerSocket. The argument is an integer which is the port number to accept
-                // requests on.
-                serverSocket = new ServerSocket(1337);
-                
-                // Now, we will wait for a client to connect. We will not move past the following call until the 
-                // server receives a connection.
-                Socket clientSocket = serverSocket.accept();
-                
-                BufferedReader input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                
-                // Just convert the first line of the input into a String and print it out onto the server console.
-                String clientInputString = input.readLine();
-                System.out.println("Received message from client: " + clientInputString);
-                
-                // The client is probably waiting for a server response. Let's send a message to the client to inform it
-                // that we've received it's message.
-                PrintStream responseStream = new PrintStream(clientSocket.getOutputStream());
-                responseStream.println("I got your message. It said: " + clientInputString);
-            }
-            catch (Exception exception) {
-                exception.printStackTrace();
-            }
-            
-            // Now that we've responded, we can close our connection to this socket gracefully.
-            try {
-                serverSocket.close();
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
+            Socket clientSocket = serverSocket.accept();
+            System.out.println("Connection established with client.");
+            threadPool.execute(new ClientWorkerThread(clientSocket));
         }
+    }
+    
+    @Override
+    protected void finalize() throws Throwable {
+        if (serverSocket != null) {
+            serverSocket.close();
+        }
+        super.finalize();
     }
 }
