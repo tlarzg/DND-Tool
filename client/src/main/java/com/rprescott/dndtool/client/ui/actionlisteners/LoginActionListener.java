@@ -10,7 +10,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import com.rprescott.dndtool.client.connection.ConnectionService;
-import com.rprescott.dndtool.sharedmessages.login.LoginCredentials;
+import com.rprescott.dndtool.sharedmessages.login.UserLogin;
 import com.rprescott.dndtool.sharedmessages.login.LoginResponse;
 
 /**
@@ -30,7 +30,7 @@ public class LoginActionListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        LoginCredentials credentials = new LoginCredentials(userNameField.getText(), passwordField.getPassword());
+        UserLogin credentials = new UserLogin(userNameField.getText(), passwordField.getPassword());
         System.out.println("Submitting login request with Username: " + credentials.getUserName());
         try {
             ConnectionService.obtainClientOutputStream().writeObject(credentials);

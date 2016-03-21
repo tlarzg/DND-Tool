@@ -6,8 +6,11 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import com.rprescott.dndtool.server.service.login.LoginService;
-import com.rprescott.dndtool.sharedmessages.login.LoginCredentials;
+import com.rprescott.dndtool.server.service.registration.UserRegistrationService;
 import com.rprescott.dndtool.sharedmessages.login.LoginResponse;
+import com.rprescott.dndtool.sharedmessages.login.UserLogin;
+import com.rprescott.dndtool.sharedmessages.registration.NewUserRegistration;
+import com.rprescott.dndtool.sharedmessages.registration.NewUserRegistrationResponse;
 
 /**
  * Class to perform the work the client requests. There will be multiple instances of this
@@ -18,6 +21,7 @@ public class ClientWorkerThread implements Runnable {
     private Socket clientSocket;
     private ObjectOutputStream outputStream;
     private LoginService loginService;
+    private UserRegistrationService userRegistrationService;
 
     /**
      * Creates a new instance of this class given a supplied client Socket.
@@ -27,12 +31,13 @@ public class ClientWorkerThread implements Runnable {
      *                       login service, but when this class requires more services, the constructor will grow quite large.
      * @param clientSocket - The socket representing the client this instance is connected to.
      */
-    public ClientWorkerThread(LoginService loginService, Socket clientSocket) {
+    public ClientWorkerThread(LoginService loginService, UserRegistrationService userRegistrationService, Socket clientSocket) {
         Thread.currentThread().setName("Client Worker Thread " + clientSocket.getInetAddress().getHostName() +  "  " + this.hashCode());
         
         try {
             this.outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
             this.loginService = loginService;
+            this.userRegistrationService = userRegistrationService;
             this.clientSocket = clientSocket;
             this.clientSocket.setKeepAlive(true);
         }
@@ -65,8 +70,11 @@ public class ClientWorkerThread implements Runnable {
      * @param objectFromClient - The object received by the client.
      */
     private void delegateWork(Object objectFromClient) {
-        if (objectFromClient instanceof LoginCredentials) {
-            performLogonRequest((LoginCredentials) objectFromClient);
+        if (objectFromClient instanceof UserLogin) {
+            performLogonRequest((UserLogin) objectFromClient);
+        }
+        else if (objectFromClient instanceof NewUserRegistration) {
+            performUserRegistrationRequest((NewUserRegistration) objectFromClient);
         }
         else {
             System.err.println("Unknown object received by client.");
@@ -80,9 +88,9 @@ public class ClientWorkerThread implements Runnable {
      * 
      * @param objectFromClient - The credentials supplied by the client.
      */
-    private void performLogonRequest(LoginCredentials objectFromClient) {
-        String userName = ((LoginCredentials) objectFromClient).getUserName();
-        char[] password = ((LoginCredentials) objectFromClient).getPassword();
+    private void performLogonRequest(UserLogin objectFromClient) {
+        String userName = ((UserLogin) objectFromClient).getUserName();
+        char[] password = ((UserLogin) objectFromClient).getPassword();
         System.out.println("Received login request for User: " + userName);
         if (loginService.userExists(userName)) {
             try {
@@ -108,6 +116,19 @@ public class ClientWorkerThread implements Runnable {
             catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+    
+
+    private void performUserRegistrationRequest(NewUserRegistration registrationRequest) {
+        System.out.println("Received registration request for Username: " + registrationRequest.getUserName());
+        NewUserRegistrationResponse response = new NewUserRegistrationResponse(userRegistrationService.registerNewUser(registrationRequest));
+        try {
+            outputStream.writeObject(response);
+            outputStream.flush();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

@@ -1,7 +1,7 @@
 CREATE TABLE "user" (
   user_id BIGSERIAL PRIMARY KEY,
   username character varying UNIQUE NOT NULL,
-  salt character varying NOT NULL,
+  salt BYTEA NOT NULL,
   hash character varying NOT NULL
 );
 ALTER TABLE "user" OWNER TO postgres;

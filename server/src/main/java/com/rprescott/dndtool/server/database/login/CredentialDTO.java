@@ -10,7 +10,7 @@ public class CredentialDTO {
     /** The user name. */
     private String userName;
     /** Salt generated at account registration. */
-    private String salt;
+    private byte[] salt;
     /** The hashed password. */
     private String hash;
 
@@ -30,11 +30,11 @@ public class CredentialDTO {
         this.userName = userName;
     }
 
-    public String getSalt() {
+    public byte[] getSalt() {
         return salt;
     }
 
-    public void setSalt(String salt) {
+    public void setSalt(byte[] salt) {
         this.salt = salt;
     }
 

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.rprescott.dndtool.server.service.login.LoginService;
+import com.rprescott.dndtool.server.service.registration.UserRegistrationService;
 import com.rprescott.dndtool.server.utils.ThreadPoolPrinter;
 
 @Component
@@ -22,6 +23,8 @@ public class Server implements DisposableBean {
     private ServerSocket serverSocket;
     @Autowired
     private LoginService loginService;
+    @Autowired
+    private UserRegistrationService userRegistrationService;
     
     /** Thread pool of fixed size. */
     private ThreadPoolExecutor threadPool;
@@ -37,7 +40,7 @@ public class Server implements DisposableBean {
             Socket clientSocket = serverSocket.accept();
             System.out.println("Connection established with client.");
             // Send the work onto a separate worker thread to allow other clients to connect.
-            threadPool.execute(new ClientWorkerThread(loginService, clientSocket));
+            threadPool.execute(new ClientWorkerThread(loginService, userRegistrationService, clientSocket));
         }
     }
 

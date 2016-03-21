@@ -25,7 +25,7 @@ public class LoginScreen extends JFrame {
     private JTextField hostnameTextField;
     private JTextField portTextField;
     
-    public LoginScreen(String version) {
+    public LoginScreen() {
         contentPanel = new JPanel();
         layout = new MigLayout();
         contentPanel.setLayout(layout);
@@ -57,7 +57,7 @@ public class LoginScreen extends JFrame {
     private void addPortSection() {
         JLabel portLabel = new JLabel("Port: ");
         portTextField = new JTextField(15);
-        portTextField.setText("8080");
+        portTextField.setText("1337");
         ((AbstractDocument) portTextField.getDocument()).setDocumentFilter(new NumericDocumentFilter());
         contentPanel.add(portLabel);
         contentPanel.add(portTextField, "wrap");

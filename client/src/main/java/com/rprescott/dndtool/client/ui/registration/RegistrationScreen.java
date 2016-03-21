@@ -1,4 +1,4 @@
-package com.rprescott.dndtool.client.ui.authentication;
+package com.rprescott.dndtool.client.ui.registration;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -11,20 +11,19 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import com.rprescott.dndtool.client.Constants;
-import com.rprescott.dndtool.client.ui.actionlisteners.LoginActionListener;
-import com.rprescott.dndtool.client.ui.actionlisteners.RegisterButtonActionListener;
+import com.rprescott.dndtool.client.ui.actionlisteners.RegisterNewUserActionListener;
 
 import net.miginfocom.swing.MigLayout;
 
-public class AuthenticationScreen extends JFrame {
+public class RegistrationScreen extends JFrame {
 
-    private static final long serialVersionUID = 3194339558688311620L;
-    private JPanel contentPanel;
+    private static final long serialVersionUID = -7667928221798082456L;
     private MigLayout layout;
+    private JPanel contentPanel;
     private JTextField userNameField;
     private JPasswordField passwordField;
     
-    public AuthenticationScreen() {
+    public RegistrationScreen() {
         contentPanel = new JPanel();
         layout = new MigLayout();
         contentPanel.setLayout(layout);
@@ -41,8 +40,7 @@ public class AuthenticationScreen extends JFrame {
     private void addContent() {
         addUserNameSection();
         addPasswordSection();
-        addEnterButtonSection();
-        addRegisterNewUserButton();
+        addRegisterSection();
     }
 
     private void addUserNameSection() {
@@ -59,16 +57,9 @@ public class AuthenticationScreen extends JFrame {
         contentPanel.add(passwordField, "wrap");
     }
     
-    private void addEnterButtonSection() {
-        JButton loginButton = new JButton("Login");
-        loginButton.addActionListener(new LoginActionListener(this, userNameField, passwordField));
-        contentPanel.add(loginButton);
-    }
-    
-
-    private void addRegisterNewUserButton() {
-        JButton registerButton = new JButton("Register New User");
-        registerButton.addActionListener(new RegisterButtonActionListener(this));
+    private void addRegisterSection() {
+        JButton registerButton = new JButton("Register");
+        registerButton.addActionListener(new RegisterNewUserActionListener(this, userNameField, passwordField));
         contentPanel.add(registerButton);
     }
 
