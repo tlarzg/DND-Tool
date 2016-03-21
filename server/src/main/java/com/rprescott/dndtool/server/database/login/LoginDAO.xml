@@ -6,12 +6,25 @@
   
   <select id="getUserCredentialByName" resultType="CredentialDTO">
     SELECT
-        USER_id,
+        user_id AS id,
         username,
         salt,
         hash
-    FROM user
+    FROM "user"
     WHERE username = #{userName}
   </select>
+  
+  <insert id="registerNewUser" useGeneratedKeys="true" keyColumn="user_id" keyProperty="id" parameterType="CredentialDTO">
+    INSERT INTO "user" (
+        username,
+        salt,
+        hash
+    )
+    VALUES (
+        #{userName},
+        #{salt},
+        #{hash}
+    )
+  </insert>
   
 </mapper>

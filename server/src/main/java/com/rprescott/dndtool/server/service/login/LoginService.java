@@ -59,11 +59,11 @@ public class LoginService {
         try {
             // Grab the credentials of the user attempting to login.
             CredentialDTO trustedCredentials = getUser(userName);
-            KeySpec spec = new PBEKeySpec(password, trustedCredentials.getSalt().getBytes(), 65536, 128);
+            Base64.Encoder base64Encoder = Base64.getEncoder();
+            KeySpec spec = new PBEKeySpec(password, trustedCredentials.getSalt(), 65536, 128);
             SecretKeyFactory secretKey = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
             // Using the salt created when registering the user, rehash the supplied password with the same salt.
             byte[] hash = secretKey.generateSecret(spec).getEncoded();
-            Base64.Encoder base64Encoder = Base64.getEncoder();
             String hashedPassword = base64Encoder.encodeToString(hash);
             
             System.out.println("Trusted Credentials: " + trustedCredentials.getHash());
