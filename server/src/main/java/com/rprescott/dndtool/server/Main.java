@@ -7,16 +7,18 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.nimbusds.srp6.SRP6Exception;
+
 public class Main implements DisposableBean {
 
     private static ApplicationContext context;
 
     /**
      * Entry point to the application. Spawns the application context and starts the server.
-     * 
+     *
      * @param args - All arguments are currently being ignored.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SRP6Exception {
         context = new ClassPathXmlApplicationContext("com/rprescott/dndtool/server/config/application-context.xml");
         Server server = context.getBean(Server.class);
         try {

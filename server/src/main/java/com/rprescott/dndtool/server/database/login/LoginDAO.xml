@@ -8,8 +8,9 @@
     SELECT
         user_id AS id,
         username,
-        salt,
-        hash
+        cipher_iv,
+        verification_secret AS ciphered_verification_secret,
+        verification_salt AS ciphered_verification_salt
     FROM "user"
     WHERE username = #{userName}
   </select>
@@ -17,13 +18,15 @@
   <insert id="registerNewUser" useGeneratedKeys="true" keyColumn="user_id" keyProperty="id" parameterType="CredentialDTO">
     INSERT INTO "user" (
         username,
-        salt,
-        hash
+        cipher_iv,
+        verification_secret,
+        verification_salt
     )
     VALUES (
         #{userName},
-        #{salt},
-        #{hash}
+        #{cipherIv},
+        #{cipheredVerificationSecret},
+        #{cipheredVerificationSalt}
     )
   </insert>
   
