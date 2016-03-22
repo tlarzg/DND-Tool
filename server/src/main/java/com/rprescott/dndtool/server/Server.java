@@ -12,21 +12,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.stereotype.Component;
 
+import com.nimbusds.srp6.SRP6Exception;
 import com.rprescott.dndtool.server.utils.ThreadPoolPrinter;
 
 @Component
 public class Server implements DisposableBean {
-    
+
     // TODO: Grab value from config file / database table.
     private static final int NUM_THREADS_IN_POOL = 5;
     private ServerSocket serverSocket;
     @Autowired
     private AutowireCapableBeanFactory beanFactory;
-    
+
     /** Thread pool of fixed size. */
     private ThreadPoolExecutor threadPool;
-    
-    public void run() throws IOException {
+
+    public void run() throws IOException, SRP6Exception {
         threadPool = new ThreadPoolExecutor(NUM_THREADS_IN_POOL, NUM_THREADS_IN_POOL, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
         new ThreadPoolPrinter(threadPool, 5);
         // Creating a new ServerSocket. The argument is an integer which is the port number to accept
