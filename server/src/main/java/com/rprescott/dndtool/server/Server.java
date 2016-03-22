@@ -9,10 +9,9 @@ import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.stereotype.Component;
 
-import com.rprescott.dndtool.server.service.login.LoginService;
-import com.rprescott.dndtool.server.service.registration.UserRegistrationService;
 import com.rprescott.dndtool.server.utils.ThreadPoolPrinter;
 
 @Component
@@ -22,9 +21,7 @@ public class Server implements DisposableBean {
     private static final int NUM_THREADS_IN_POOL = 5;
     private ServerSocket serverSocket;
     @Autowired
-    private LoginService loginService;
-    @Autowired
-    private UserRegistrationService userRegistrationService;
+    private AutowireCapableBeanFactory beanFactory;
     
     /** Thread pool of fixed size. */
     private ThreadPoolExecutor threadPool;
@@ -40,7 +37,9 @@ public class Server implements DisposableBean {
             Socket clientSocket = serverSocket.accept();
             System.out.println("Connection established with client.");
             // Send the work onto a separate worker thread to allow other clients to connect.
-            threadPool.execute(new ClientWorkerThread(loginService, userRegistrationService, clientSocket));
+            ClientWorkerThread worker = new ClientWorkerThread(clientSocket);
+            beanFactory.autowireBean(worker);
+            threadPool.execute(worker);
         }
     }
 

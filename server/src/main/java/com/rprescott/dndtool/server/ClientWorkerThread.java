@@ -5,6 +5,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.rprescott.dndtool.server.service.login.LoginService;
 import com.rprescott.dndtool.server.service.registration.UserRegistrationService;
 import com.rprescott.dndtool.sharedmessages.login.LoginResponse;
@@ -20,7 +22,9 @@ public class ClientWorkerThread implements Runnable {
 
     private Socket clientSocket;
     private ObjectOutputStream outputStream;
+    @Autowired
     private LoginService loginService;
+    @Autowired
     private UserRegistrationService userRegistrationService;
 
     /**
@@ -31,13 +35,11 @@ public class ClientWorkerThread implements Runnable {
      *                       login service, but when this class requires more services, the constructor will grow quite large.
      * @param clientSocket - The socket representing the client this instance is connected to.
      */
-    public ClientWorkerThread(LoginService loginService, UserRegistrationService userRegistrationService, Socket clientSocket) {
+    public ClientWorkerThread(Socket clientSocket) {
         Thread.currentThread().setName("Client Worker Thread " + clientSocket.getInetAddress().getHostName() +  "  " + this.hashCode());
         
         try {
             this.outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
-            this.loginService = loginService;
-            this.userRegistrationService = userRegistrationService;
             this.clientSocket = clientSocket;
             this.clientSocket.setKeepAlive(true);
         }
