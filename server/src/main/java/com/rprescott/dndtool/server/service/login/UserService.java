@@ -5,6 +5,7 @@ import java.security.GeneralSecurityException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.Arrays;
 import java.util.Optional;
 
 import javax.crypto.Cipher;
@@ -19,6 +20,7 @@ import com.rprescott.dndtool.server.database.login.LoginDAO;
 
 @Service
 public class UserService {
+    private static final int MAX_DERIVED_KEY_LENGTH = 16;
     //XXX: Load from external secret store
     private static final String VERIFICATION_SECRET_KEY = "AG#%JAsadgSD3456POIJAS234GIHAS!DVOJsdiohsa&oidgh/lk21j34235";
     //XXX: Load from external secret store
@@ -57,7 +59,7 @@ public class UserService {
 
     public CredentialDTO registerUser(String userName, BigInteger verificationSalt, BigInteger verificationSecret) {
         CredentialDTO credentials = new CredentialDTO();
-        credentials.setUserName(userName);;
+        credentials.setUserName(userName);
 
         try {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
@@ -119,8 +121,8 @@ public class UserService {
 
     private SecretKeySpec getKeyFromSecret(String secret) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        digest.update(SALT_SECRET_KEY.getBytes());
-        return new SecretKeySpec(digest.digest(), "AES");
+        digest.update(secret.getBytes());
+        return new SecretKeySpec(Arrays.copyOf(digest.digest(), MAX_DERIVED_KEY_LENGTH), "AES");
     }
 
     private byte[] encryptWithCipher(SecretKeySpec keySpec, IvParameterSpec ivSpec, byte[] value)
