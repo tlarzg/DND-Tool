@@ -2,7 +2,9 @@ package com.rprescott.dndtool.sharedmessages.login;
 
 import java.io.Serializable;
 
-public class LoginResponse implements Serializable {
+import com.rprescott.dndtool.sharedmessages.markers.ServerMessage;
+
+public class LoginResponse implements Serializable, ServerMessage {
     
     private static final long serialVersionUID = 4216214815596755635L;
     private boolean loginSuccessful;

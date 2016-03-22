@@ -26,6 +26,8 @@ public class ClientWorkerThread implements Runnable {
     private LoginService loginService;
     @Autowired
     private UserRegistrationService userRegistrationService;
+    @Autowired
+    private MessageDelegator messageDelegator;
 
     /**
      * Creates a new instance of this class given a supplied client Socket.
@@ -72,6 +74,8 @@ public class ClientWorkerThread implements Runnable {
      * @param objectFromClient - The object received by the client.
      */
     private void delegateWork(Object objectFromClient) {
+        // TODO: I'm not too happy with how this works yet. The processors don't do the work (yet).
+        messageDelegator.delegateWork(objectFromClient);
         if (objectFromClient instanceof UserLogin) {
             performLogonRequest((UserLogin) objectFromClient);
         }
