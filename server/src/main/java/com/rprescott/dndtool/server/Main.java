@@ -1,11 +1,9 @@
 package com.rprescott.dndtool.server;
 
-import java.io.IOException;
-
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.nimbusds.srp6.SRP6Exception;
 
@@ -19,14 +17,7 @@ public class Main implements DisposableBean {
      * @param args - All arguments are currently being ignored.
      */
     public static void main(String[] args) throws SRP6Exception {
-        context = new ClassPathXmlApplicationContext("com/rprescott/dndtool/server/config/application-context.xml");
-        Server server = context.getBean(Server.class);
-        try {
-            server.run();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+        context = new AnnotationConfigApplicationContext(ContextConfiguration.class);
     }
 
     @Override
