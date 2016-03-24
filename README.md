@@ -1,10 +1,10 @@
-# DND-Tool <Rename Me :(>
+# DND-Tool (Rename Me :(  )
 
 [![Hex.pm](https://img.shields.io/hexpm/l/plug.svg)](http://www.apache.org/licenses/LICENSE-2.0) 
 
 Purpose
 -------
-<Tool Name> is designed to help remove some of the tediousness that encumbers all members of the adventure as well as help facilitate distribution of information to each adventurer from the Dungeon Master.
+(Tool Name) is designed to help remove some of the tediousness that encumbers all members of the adventure as well as help facilitate distribution of information to each adventurer from the Dungeon Master.
 
 Why?
 ----
