@@ -6,20 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.dndtool.model.AbilityDTO;
-import com.rprescott.dndtool.server.service.ability.AbilityExistsException;
-import com.rprescott.dndtool.server.service.ability.AbilityService;
+import com.rprescott.dndtool.server.ability.AbilityDTO;
+import com.rprescott.dndtool.server.ability.AbilityExistsException;
+import com.rprescott.dndtool.server.ability.AbilityService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes=com.rprescott.dndtool.server.ContextConfiguration.class)
 public class PopulateDatabase {
-    
+
     @Autowired
     private AbilityService abilityService;
-    
+
     /**
      * Simple test just to get some data into the database with how frequently the schema is being updated.
-     * @throws AbilityExistsException 
+     * @throws AbilityExistsException
      */
     @Test
     public void populateDatabase() throws AbilityExistsException {
