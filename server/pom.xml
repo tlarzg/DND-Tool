@@ -38,7 +38,8 @@
                         </goals>
                         <configuration>
                             <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                <transformer
+                                    implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <mainClass>com.rprescott.dndtool.server.Main</mainClass>
                                 </transformer>
                             </transformers>
@@ -66,6 +67,12 @@
         <dependency>
             <groupId>dnd-tool</groupId>
             <artifactId>shared-messages</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>dnd-tool</groupId>
+            <artifactId>object-model</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
