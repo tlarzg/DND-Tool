@@ -7,6 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.dndtool.model.AbilityDTO;
+import com.rprescott.dndtool.server.service.ability.AbilityExistsException;
 import com.rprescott.dndtool.server.service.ability.AbilityService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -18,9 +19,10 @@ public class PopulateDatabase {
     
     /**
      * Simple test just to get some data into the database with how frequently the schema is being updated.
+     * @throws AbilityExistsException 
      */
     @Test
-    public void populateDatabase() {
+    public void populateDatabase() throws AbilityExistsException {
         AbilityDTO fireball = new AbilityDTO("Fireball", "Pew Pew Pew");
         AbilityDTO frostbolt = new AbilityDTO("Frostbolt", "Pow Pow Pow");
         abilityService.createNewAbility(fireball);

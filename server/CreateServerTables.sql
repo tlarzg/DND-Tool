@@ -29,7 +29,7 @@ CREATE TABLE "character" (
 
 CREATE TABLE ability (
   ability_id BIGSERIAL PRIMARY KEY,
-  name character varying NOT NULL,
+  name character varying UNIQUE NOT NULL,
   description character varying NOT NULL
 );
 

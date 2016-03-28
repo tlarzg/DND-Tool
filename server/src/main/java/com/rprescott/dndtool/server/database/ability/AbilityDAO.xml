@@ -14,5 +14,16 @@
             #{description}
         )
     </insert>
+    
+    <select id="retrieveAllAbilities" resultType="AbilityDTO">
+        SELECT name, description
+        FROM ability
+    </select>
+    
+    <select id="findAbilityByName" resultType="AbilityDTO">
+        SELECT name, description
+        FROM ability
+        WHERE name = #{name}
+    </select>
 
 </mapper>

@@ -13,6 +13,7 @@
   
   <typeAliases>
         <typeAlias alias="CredentialDTO" type="com.rprescott.dndtool.server.database.login.CredentialDTO"/>
+        <typeAlias alias="AbilityDTO" type="com.dndtool.model.AbilityDTO"/>
   </typeAliases>
   
 </configuration>
