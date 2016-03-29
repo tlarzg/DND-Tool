@@ -24,7 +24,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
                 .antMatchers("/login/challenge").permitAll()
                 .antMatchers("/login").hasRole("PRE_AUTH_USER")
-                .antMatchers("/**").authenticated()
+                .antMatchers("/**").permitAll()
             .and().addFilterBefore(srpFilter, UsernamePasswordAuthenticationFilter.class).csrf()
             .and().sessionManagement();
     }

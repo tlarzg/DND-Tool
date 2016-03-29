@@ -33,7 +33,7 @@ public class Main {
         Server server = new Server(port);
 
         WebAppContext context = new WebAppContext();
-        context.setContextPath("/");
+        context.setResourceBase("src/main/webapp");
         context.setConfigurations(new Configuration[] {
             new AnnotationConfiguration() {
                 @Override
@@ -42,7 +42,7 @@ public class Main {
                     map.put(WebApplicationInitializer.class.getName(),
                         new ConcurrentHashSet<String>() {{
                             add(SecurityInitializer.class.getName());
-                            add(SpringServletInitializer.class.getName());
+                            add(ApiServletInitializer.class.getName());
                         }});
                     context.setAttribute(CLASS_INHERITANCE_MAP, map);
                     _classInheritanceHandler = new ClassInheritanceHandler(map);

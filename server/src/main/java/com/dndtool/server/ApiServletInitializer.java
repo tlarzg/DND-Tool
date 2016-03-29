@@ -4,7 +4,7 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 
 import com.dndtool.server.security.SecurityConfiguration;
 
-public class SpringServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class ApiServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
