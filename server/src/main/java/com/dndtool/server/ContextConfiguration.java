@@ -12,10 +12,9 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import com.dndtool.server.ability.AbilityConfiguration;
-import com.dndtool.server.account.AccountConfiguration;
 
 @Configuration
-@Import({AccountConfiguration.class, AbilityConfiguration.class})
+@Import({AbilityConfiguration.class})
 public class ContextConfiguration {
 
     @Bean

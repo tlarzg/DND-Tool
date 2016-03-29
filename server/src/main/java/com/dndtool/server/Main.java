@@ -1,25 +1,19 @@
 package com.dndtool.server;
 
+import org.eclipse.jetty.annotations.AnnotationConfiguration;
+import org.eclipse.jetty.annotations.ClassInheritanceHandler;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.handler.ContextHandler;
-import org.eclipse.jetty.server.handler.ContextHandlerCollection;
-import org.eclipse.jetty.server.handler.ResourceHandler;
-import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.servlet.ServletHolder;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.web.context.ContextLoaderListener;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springframework.web.servlet.DispatcherServlet;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.eclipse.jetty.util.ConcurrentHashSet;
+import org.eclipse.jetty.webapp.Configuration;
+import org.eclipse.jetty.webapp.WebAppContext;
+import org.springframework.web.WebApplicationInitializer;
+
+import com.dndtool.server.security.SecurityInitializer;
 
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
 
-@Configuration
-@EnableWebMvc
-@Import(ContextConfiguration.class)
 public class Main {
 
     private static final int DEFAULT_PORT = 8080;
@@ -36,26 +30,26 @@ public class Main {
     }
 
     private static void startServer(int port) throws Exception {
-        AnnotationConfigWebApplicationContext springContext = new AnnotationConfigWebApplicationContext();
-        springContext.setConfigLocation(Main.class.getName());
-
-        ContextHandlerCollection contexts = new ContextHandlerCollection();
-
-        ServletContextHandler springHandler = new ServletContextHandler();
-        springHandler.setContextPath("/api");
-        springHandler.addEventListener(new ContextLoaderListener(springContext));
-        springHandler.addServlet(new ServletHolder(new DispatcherServlet(springContext)), "/*");
-        contexts.addHandler(springHandler);
-
-        ContextHandler resourceContext = new ContextHandler();
-        ResourceHandler resourceHandler = new ResourceHandler();
-        resourceHandler.setResourceBase("src/main/webapp/");
-        resourceContext.setHandler(resourceHandler);
-        resourceContext.setContextPath("/");
-        contexts.addHandler(resourceContext);
-
         Server server = new Server(port);
-        server.setHandler(contexts);
+
+        WebAppContext context = new WebAppContext();
+        context.setContextPath("/");
+        context.setConfigurations(new Configuration[] {
+            new AnnotationConfiguration() {
+                @Override
+                public void preConfigure(WebAppContext context) {
+                    ClassInheritanceMap map = new ClassInheritanceMap();
+                    map.put(WebApplicationInitializer.class.getName(),
+                        new ConcurrentHashSet<String>() {{
+                            add(SecurityInitializer.class.getName());
+                            add(SpringServletInitializer.class.getName());
+                        }});
+                    context.setAttribute(CLASS_INHERITANCE_MAP, map);
+                    _classInheritanceHandler = new ClassInheritanceHandler(map);
+                }
+            }
+        });
+        server.setHandler(context);
         server.start();
         server.join();
     }

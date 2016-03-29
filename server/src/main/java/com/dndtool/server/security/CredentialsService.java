@@ -1,4 +1,4 @@
-package com.dndtool.server.account;
+package com.dndtool.server.security;
 
 import java.math.BigInteger;
 import java.security.GeneralSecurityException;
@@ -16,18 +16,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-class AccountService {
+class CredentialsService {
     private static final int MAX_DERIVED_KEY_LENGTH = 16;
     //XXX: Load from external secret store
     private static final String VERIFICATION_SECRET_KEY = "AG#%JAsadgSD3456POIJAS234GIHAS!DVOJsdiohsa&oidgh/lk21j34235";
     //XXX: Load from external secret store
     private static final String SALT_SECRET_KEY = "V OSO s9e0utw et #4t6346jos//[lSDGW#$)sviojhsg90u23SGKNLHvspog235";
 
-    private final AccountDAO accountDao;
+    private final CredentialsDAO credentialsDao;
 
     @Autowired
-    AccountService(AccountDAO accountDao) {
-        this.accountDao = accountDao;
+    CredentialsService(CredentialsDAO credentialsDao) {
+        this.credentialsDao = credentialsDao;
     }
 
     /**
@@ -36,14 +36,14 @@ class AccountService {
      * @param userName - The user name to check.
      * @return The user credentials from the database or <b>null</b> if the user does not exist.
      */
-    AccountCredentialsDTO getUser(String userName) {
-        return accountDao.getUserCredentialByName(userName);
+    CredentialsDTO getUser(String userName) {
+        return credentialsDao.getUserCredentialByName(userName);
     }
 
-    AccountCredentialsDTO registerUser(String userName, BigInteger verificationSalt,
+    CredentialsDTO registerUser(String userName, BigInteger verificationSalt,
         BigInteger verificationSecret) {
 
-        AccountCredentialsDTO credentials = new AccountCredentialsDTO();
+        CredentialsDTO credentials = new CredentialsDTO();
         credentials.setUserName(userName);
 
         try {
@@ -65,12 +65,12 @@ class AccountService {
             throw new RuntimeException("Could not digest user credentials", ex);
         }
 
-        accountDao.registerNewUser(credentials);
+        credentialsDao.registerNewUser(credentials);
 
         return credentials;
     }
 
-    Optional<BigInteger> getVerificationSecret(AccountCredentialsDTO userCredentials) {
+    Optional<BigInteger> getVerificationSecret(CredentialsDTO userCredentials) {
         Optional<BigInteger> verificationSecret;
         try {
             IvParameterSpec ivSpec = new IvParameterSpec(userCredentials.getCipherIv());
@@ -87,7 +87,7 @@ class AccountService {
         return verificationSecret;
     }
 
-    Optional<BigInteger> getVerificationSalt(AccountCredentialsDTO userCredentials) {
+    Optional<BigInteger> getVerificationSalt(CredentialsDTO userCredentials) {
         Optional<BigInteger> verificationSalt;
         try {
             IvParameterSpec ivSpec = new IvParameterSpec(userCredentials.getCipherIv());

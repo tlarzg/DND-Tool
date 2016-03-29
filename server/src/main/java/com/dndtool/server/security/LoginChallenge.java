@@ -1,4 +1,4 @@
-package com.dndtool.server.account;
+package com.dndtool.server.security;
 
 class LoginChallenge {
     private final String userSaltHex;

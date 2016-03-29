@@ -1,9 +1,9 @@
-package com.dndtool.server.account;
+package com.dndtool.server.security;
 
 public class ServerLoginEvidence {
     private final String serverEvidenceHex;
 
-    ServerLoginEvidence(String serverEvidenceHex) {
+    public ServerLoginEvidence(String serverEvidenceHex) {
         this.serverEvidenceHex = serverEvidenceHex;
     }
 
