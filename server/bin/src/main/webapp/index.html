@@ -1,0 +1,70 @@
+<html>
+<head>
+  <script src="lib/jquery.js"></script>
+  <script src="lib/biginteger.js"></script>
+  <script src="lib/isaac.js"/></script>
+  <script src="lib/random.js"/></script>
+  <script src="lib/rfc5054-safe-prime-config.js"/></script>
+  <script src="lib/sha1.js"/></script>
+  <script src="lib/thinbus-srp6client.js"/></script>
+  <script src="lib/thinbus-srp6client-sha1.js"/></script>
+  <script>
+    var Login = {
+      options: {},
+
+      initialize: function (options) {
+        var me = this;
+
+        if (options) {
+          me.options = options;
+        }
+
+        $(me.options.formId).on('submit', function (e) {
+          e.preventDefault();
+
+          var postValues = {
+            userName: me.getUsername()
+          }
+
+          $.ajax({
+            type: "POST",
+            url: me.options.challengeUrl,
+            processData: false,
+            contentType: 'application/json',
+            data: JSON.stringify(postValues),
+            success: function(response) {
+              alert('Got Login Challenge:\n' + JSON.stringify(response));
+            }
+          });
+          return false;
+        });
+      },
+      getUsername: function () {
+    	  return $(this.options.usernameId).val();
+      }
+    }
+  </script>
+</head>
+<body>
+  <h1>Hello</h1>
+  <p>I'm static html</p>
+  <form id="login-form">
+    <label>Username:</label>
+    <input type="text" name="userName" id="login-username"/>
+    <label>Password:</label>
+    <input type="password" id="login-password"/>
+    <input type="submit" value="Login"/>
+  </form>
+  <script>
+    $(function() {
+      Login.initialize({
+        challengeUrl: '/api/login/start',
+        securityCheckUrl: '/api/login/response',
+        usernameId: '#login-username',
+        passwordId: '#login-password',
+        formId: '#login-form'
+      });
+    });
+  </script>
+</body>
+</html>
