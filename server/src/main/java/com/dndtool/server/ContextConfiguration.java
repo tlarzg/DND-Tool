@@ -10,13 +10,16 @@ import org.springframework.context.annotation.Import;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.dndtool.server.ability.AbilityConfiguration;
-import com.dndtool.server.account.AccountConfiguration;
 
 @Configuration
-@Import({AccountConfiguration.class, AbilityConfiguration.class})
-public class ContextConfiguration {
+@EnableWebMvc
+@Import({AbilityConfiguration.class})
+public class ContextConfiguration extends WebMvcConfigurerAdapter {
 
     @Bean
     public DataSource dataSource() {
@@ -41,5 +44,10 @@ public class ContextConfiguration {
         sessionFactoryBean.setConfigLocation(
             new ClassPathResource("/com/dndtool/server/mybatis-configuration.xml"));
         return sessionFactoryBean.getObject();
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/**").addResourceLocations("/", "/src/main/webapp/");
     }
 }
