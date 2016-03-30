@@ -1,4 +1,4 @@
-package com.dndtool.server.account;
+package com.dndtool.server.security;
 
 public class ClientLoginEvidence {
     private String clientPublicValHex;

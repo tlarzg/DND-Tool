@@ -13,7 +13,7 @@
     </settings>
 
     <typeAliases>
-        <typeAlias alias="AccountCredentialsDTO" type="com.dndtool.server.account.AccountCredentialsDTO"/>
+        <typeAlias alias="CredentialsDTO" type="com.dndtool.server.security.CredentialsDTO"/>
         <typeAlias alias="AbilityDTO" type="com.dndtool.server.ability.AbilityDTO"/>
     </typeAliases>
 
