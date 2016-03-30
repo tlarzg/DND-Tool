@@ -27,5 +27,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**").permitAll()
             .and().addFilterBefore(srpFilter, UsernamePasswordAuthenticationFilter.class).csrf()
             .and().sessionManagement();
+        
+        // XXX: Reenable me when we are passing CSRF headers through rest calls (When we actually have the web app part set up)
+        http.csrf().disable();
     }
 }
