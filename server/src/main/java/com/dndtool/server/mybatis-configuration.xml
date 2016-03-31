@@ -14,6 +14,10 @@
 
     <typeAliases>
         <typeAlias alias="CredentialsDTO" type="com.dndtool.server.security.CredentialsDTO"/>
+        
+        <typeAlias alias="CampaignDTO" type="com.dndtool.server.campaign.CampaignDTO"/>
+        <typeAlias alias="BasicCampaignInfo" type="com.dndtool.server.campaign.BasicCampaignInfo"/>
+        
         <typeAlias alias="AbilityDTO" type="com.dndtool.server.ability.AbilityDTO"/>
     </typeAliases>
 

@@ -1,5 +1,7 @@
 package com.dndtool.server.campaign;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -7,13 +9,7 @@ import org.springframework.stereotype.Service;
 public class CampaignService {
 
     private CampaignDAO campaignDao;
-
-    public CampaignDTO retrieveCampaign(String campaignName) {
-        // TODO: Actually retrieve a fully populated campaign.
-        CampaignDTO campaign = new CampaignDTO();
-        return campaign;
-    }
-
+    
     /**
      * Creates a basic campaign with the provided name and description.
      *
@@ -22,6 +18,16 @@ public class CampaignService {
      */
     public void createNewCampaign(String name, String description) {
         campaignDao.createNewCampaign(name, description);
+    }
+    
+    /**
+     * Retrieves a list of campaigns a user is currently participating in.
+     * 
+     * @param userName - The username to find the campaigns for.
+     * @return A list of campaigns a user is currently participating in.
+     */
+    public List<BasicCampaignInfo> getCampaignsForUser(String userName) {
+        return campaignDao.getCampaignsForUser(userName);
     }
 
     @Autowired
