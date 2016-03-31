@@ -1,9 +1,11 @@
 CREATE TABLE "user" (
   user_id BIGSERIAL PRIMARY KEY,
   username character varying UNIQUE NOT NULL,
-  cipher_iv BYTEA NOT NULL,
-  verification_secret BYTEA NOT NULL,
-  verification_salt BYTEA NOT NULL
+  password character varying NOT NULL,
+  is_account_expired boolean NOT NULL,
+  is_account_locked boolean NOT NULL,
+  is_password_expired boolean NOT NULL,
+  is_account_enabled boolean NOT NULL
 );
 ALTER TABLE "user" OWNER TO postgres;
 
