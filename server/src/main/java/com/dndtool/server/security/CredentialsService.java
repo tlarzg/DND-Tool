@@ -23,6 +23,16 @@ public class CredentialsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return credentialsDao.getUserCredentialByName(username);
     }
+    
+    /**
+     * Determines whether a user exists or not.
+     * 
+     * @param username - The user to check.
+     * @return True if the user exists. False otherwise.
+     */
+    public boolean userExists(String username) {
+        return credentialsDao.getUserCredentialByName(username) != null;
+    }
 
     public void registerUser(String username, String password) {
         credentialsDao.registerNewUser(username, passwordEncoder.encode(password));

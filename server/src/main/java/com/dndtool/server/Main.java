@@ -21,6 +21,19 @@ public class Main {
 
     private static final int DEFAULT_PORT = 8080;
 
+    /**
+     * Entry point to the application. Accepts the following following arguments:
+     * <li>--port (port number)</li>
+     * <li>--init (True/False)</li>
+     * <li>--user (userName) </li>
+     * <li>--password (password) </li>
+     *
+     * Setting the port attribute will define what port the server is listening on. If the initialization flag is
+     * set, you can specify a user name and password to be inserted into the database as a valid user.
+     * 
+     * @param args - The arguments passed in.
+     * @throws Exception If something bad happens.
+     */
     public static void main(String[] args) throws Exception {
         OptionParser parser = new OptionParser();
         OptionSpec<Integer> portOpt =

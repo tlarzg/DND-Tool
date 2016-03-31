@@ -51,6 +51,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .failureHandler(authHandler)
                 .successHandler(authHandler)
             .and().logout().deleteCookies("JSESSIONID")
+            // XXX: Eventually, we'll want to pass the token down in the Login Request. For now, just disable the
+            // Cross site reference checking.
             .and().csrf().disable();
     }
 
