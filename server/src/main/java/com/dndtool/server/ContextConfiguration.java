@@ -15,10 +15,11 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.dndtool.server.ability.AbilityConfiguration;
+import com.dndtool.server.campaign.CampaignConfiguration;
 
 @Configuration
 @EnableWebMvc
-@Import({AbilityConfiguration.class})
+@Import({AbilityConfiguration.class, CampaignConfiguration.class})
 public class ContextConfiguration extends WebMvcConfigurerAdapter {
 
     @Bean

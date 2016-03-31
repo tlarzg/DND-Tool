@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dndtool.server.database.campaign.CampaignDAO">
+<mapper namespace="com.dndtool.server.campaign.CampaignDAO">
 
     <insert id="createNewCampaign" useGeneratedKeys="true" keyColumn="campaign_id">
         INSERT INTO campaign (
@@ -14,5 +14,13 @@
             #{description}
         )
     </insert>
+    
+    <select id="getCampaignsForUser" resultType="BasicCampaignInfo">
+        SELECT campaign.campaign_id, name, description
+        FROM campaign
+        INNER JOIN user_campaigns ON campaign.campaign_id = user_campaigns.campaign_id
+        INNER JOIN "user" ON user_campaigns.user_id = "user".user_id
+        WHERE "user".username = #{userName}
+    </select>
 
 </mapper>
