@@ -1,11 +1,12 @@
 package com.dndtool.server.security;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CredentialsDAO {
+interface CredentialsDAO {
 
-    CredentialsDTO getUserCredentialByName(String userName);
+    CredentialsDTO getUserCredentialByName(@Param("username") String username);
 
-    void registerNewUser(CredentialsDTO credentials);
+    void registerNewUser(@Param("username") String username, @Param("password") String encodedPassword);
 }

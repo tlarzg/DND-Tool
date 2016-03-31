@@ -1,70 +1,26 @@
-<html>
+<!DOCTYPE html>
 <head>
-  <script src="lib/jquery.js"></script>
-  <script src="lib/biginteger.js"></script>
-  <script src="lib/isaac.js"/></script>
-  <script src="lib/random.js"/></script>
-  <script src="lib/rfc5054-safe-prime-config.js"/></script>
-  <script src="lib/sha1.js"/></script>
-  <script src="lib/thinbus-srp6client.js"/></script>
-  <script src="lib/thinbus-srp6client-sha1.js"/></script>
-  <script>
-    var Login = {
-      options: {},
-
-      initialize: function (options) {
-        var me = this;
-
-        if (options) {
-          me.options = options;
-        }
-
-        $(me.options.formId).on('submit', function (e) {
-          e.preventDefault();
-
-          var postValues = {
-            userName: me.getUsername()
-          }
-
-          $.ajax({
-            type: "POST",
-            url: me.options.challengeUrl,
-            processData: false,
-            contentType: 'application/json',
-            data: JSON.stringify(postValues),
-            success: function(response) {
-              alert('Got Login Challenge:\n' + JSON.stringify(response));
-            }
-          });
-          return false;
-        });
-      },
-      getUsername: function () {
-    	  return $(this.options.usernameId).val();
-      }
-    }
-  </script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+  <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+  <title>Dead simple skeleton</title>
+  <script src="/app.js"></script>
+  <script>require('initialize');</script>
 </head>
 <body>
-  <h1>Hello</h1>
-  <p>I'm static html</p>
   <form id="login-form">
-    <label>Username:</label>
-    <input type="text" name="userName" id="login-username"/>
-    <label>Password:</label>
-    <input type="password" id="login-password"/>
-    <input type="submit" value="Login"/>
+    <fieldset>
+      <label>Username:</label>
+      <input type="text" id="username-input"/>
+    </fieldset>
+    <fieldset>
+      <label>Password:</label>
+      <input type="password" id="password-input"/>
+    </fieldset>
+    <fieldset>
+      <input type="submit" value="Login"/>
+    </fieldset>
   </form>
-  <script>
-    $(function() {
-      Login.initialize({
-        challengeUrl: '/login/challenge',
-        securityCheckUrl: '/login/response',
-        usernameId: '#login-username',
-        passwordId: '#login-password',
-        formId: '#login-form'
-      });
-    });
-  </script>
 </body>
 </html>
