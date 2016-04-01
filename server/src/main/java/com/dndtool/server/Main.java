@@ -3,6 +3,8 @@ package com.dndtool.server;
 import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.annotations.ClassInheritanceHandler;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.DefaultServlet;
+import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.ConcurrentHashSet;
 import org.eclipse.jetty.webapp.Configuration;
 import org.eclipse.jetty.webapp.WebAppContext;
@@ -30,7 +32,7 @@ public class Main {
      *
      * Setting the port attribute will define what port the server is listening on. If the initialization flag is
      * set, you can specify a user name and password to be inserted into the database as a valid user.
-     * 
+     *
      * @param args - The arguments passed in.
      * @throws Exception If something bad happens.
      */
@@ -76,6 +78,8 @@ public class Main {
                 }
             }
         });
+        context.addServlet(new ServletHolder(new DefaultServlet()), "/");
+
         server.setHandler(context);
         server.start();
 
