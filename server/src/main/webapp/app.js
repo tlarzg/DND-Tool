@@ -10010,7 +10010,7 @@ document.addEventListener('DOMContentLoaded', function() {
       password: password
     };
 
-    $.post('/login', loginRequest, function() {
+    $.post('/api/login', loginRequest, function() {
       alert('Logged in!');
     });
   });

@@ -43,11 +43,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/**").permitAll()
+                .antMatchers("/api/login").permitAll()
+                .antMatchers("/api/**").authenticated()
             .and().sessionManagement()
             .and().formLogin()
-                .loginProcessingUrl("/login")
+                .loginPage("/login.html")
+                .loginProcessingUrl("/api/login")
                 .failureHandler(authHandler)
                 .successHandler(authHandler)
             .and().logout().deleteCookies("JSESSIONID")
