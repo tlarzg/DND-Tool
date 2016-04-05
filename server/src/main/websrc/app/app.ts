@@ -4,7 +4,7 @@ import {FORM_PROVIDERS} from 'angular2/common';
 
 import {RouterActive} from './directives/router-active';
 import Home from './home';
-import About from './about';
+import Login from './login';
 
 
 /*
@@ -14,7 +14,7 @@ import About from './about';
 @Component({
   selector: 'app',
   providers: [ ...FORM_PROVIDERS ],
-  directives: [ ...ROUTER_DIRECTIVES, RouterActive, About ],
+  directives: [ ...ROUTER_DIRECTIVES, RouterActive, Login ],
   pipes: [],
   styles: [`
     nav ul {
@@ -44,7 +44,7 @@ import About from './about';
             <a [routerLink]=" ['Home'] ">Home</a>
           </li>
           <li router-active="active">
-            <a [routerLink]=" ['About'] ">About</a>
+            <a [routerLink]=" ['Login'] ">Login</a>
           </li>
         </ul>
       </nav>
@@ -53,18 +53,19 @@ import About from './about';
       <router-outlet></router-outlet>
     </main>
     <footer>
-      Brunch for Angular 2 by <a [href]="url">Colin Bate</a>
+      This is a DND Tool Thing. View me on <a [href]="url">Github</a>
     </footer>
   `
 })
 @RouteConfig([
   { path: '/', component: Home, name: 'Home' },
-  { path: '/about', component: About, name: 'About' },
+  { path: '/login', component: Login, name: 'Login' },
   { path: '/**', redirectTo: ['Home'] }
 ])
 export class App {
-  name = 'Brunch for Angular 2';
-  url = 'http://colin.is';
+  name = 'DND-Tool Thing';
+  url = 'https://github.com/Zizekftw/DND-Tool';
+
   constructor() {
 
   }
