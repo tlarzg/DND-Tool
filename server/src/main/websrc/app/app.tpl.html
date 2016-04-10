@@ -1,0 +1,27 @@
+<main> 
+	<md-sidenav-layout>
+		<md-sidenav #sidenav mode="side" class="app-sidenav">
+			<md-list>
+				<md-list-item router-active="active"><a [routerLink]=" ['Home'] ">Home</a></md-list-item>
+				<md-list-item router-active="active"><a [routerLink]=" ['Login'] ">Login</a></md-list-item>
+				<md-list-item router-active="active"><a [routerLink]=" ['About'] ">About</a></md-list-item>
+			</md-list>			
+		</md-sidenav>
+		
+		<md-toolbar color="primary">
+    		<button class="app-icon-button" (click)="sidenav.toggle()">
+      			<i class="material-icons app-toolbar-menu">menu</i>
+    		</button>
+
+			Hello {{ name }}
+			
+  		</md-toolbar>
+		<div>
+		
+			<router-outlet></router-outlet>
+		</div>
+		<footer>
+			This is a DND Tool Thing. View me on <a [href]="url">Github</a>
+		</footer>
+	</md-sidenav-layout>
+</main>

@@ -4,8 +4,8 @@ import 'zone.js';
 import 'reflect-metadata';
 
 if ('production' === 'BRUNCH_ENVIRONMENT') {
-  let ngCore = require('angular2/core');
-  ngCore.enableProdMode();
+    let ngCore = require('angular2/core');
+    ngCore.enableProdMode();
 }
 
 // Angular 2

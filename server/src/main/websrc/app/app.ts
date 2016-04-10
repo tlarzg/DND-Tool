@@ -1,22 +1,34 @@
 import {Component} from 'angular2/core';
 import {RouteConfig, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 import {FORM_PROVIDERS} from 'angular2/common';
+// For some reason dir is not getting imported automagically for sidenav...
+var dir_111 = require('@angular2-material/core/rtl/dir');
+import {MD_SIDENAV_DIRECTIVES} from '@angular2-material/sidenav/sidenav';
+import {MdToolbar} from '@angular2-material/toolbar/toolbar';
+import {MD_LIST_DIRECTIVES} from '@angular2-material/list/list';
 
 import {RouterActive} from './directives/router-active';
 import Home from './home';
 import Login from './login';
-
+import About from './about';
 
 /*
  * App Component
  * Top Level Component
  */
 @Component({
-  selector: 'app',
-  providers: [ ...FORM_PROVIDERS ],
-  directives: [ ...ROUTER_DIRECTIVES, RouterActive, Login ],
-  pipes: [],
-  styles: [`
+    selector: 'app',
+    providers: [...FORM_PROVIDERS],
+    directives: [
+        ...ROUTER_DIRECTIVES,
+        RouterActive,
+        Login,
+        MD_SIDENAV_DIRECTIVES,
+        MdToolbar,
+        MD_LIST_DIRECTIVES
+    ],
+    pipes: [],
+    styles: [`
     nav ul {
       list-style-type: none;
       margin: 1em 0;
@@ -35,38 +47,19 @@ import Login from './login';
       padding-top: 0.5em;
     }
   `],
-  template: `
-    <header>
-      <nav>
-        <h1>Hello {{ name }}</h1>
-        <ul>
-          <li router-active="active">
-            <a [routerLink]=" ['Home'] ">Home</a>
-          </li>
-          <li router-active="active">
-            <a [routerLink]=" ['Login'] ">Login</a>
-          </li>
-        </ul>
-      </nav>
-    </header>
-    <main>
-      <router-outlet></router-outlet>
-    </main>
-    <footer>
-      This is a DND Tool Thing. View me on <a [href]="url">Github</a>
-    </footer>
-  `
+    template: require('./app.tpl')()
 })
 @RouteConfig([
-  { path: '/', component: Home, name: 'Home' },
-  { path: '/login', component: Login, name: 'Login' },
-  { path: '/**', redirectTo: ['Home'] }
+    { path: '/', component: Home, name: 'Home' },
+    { path: '/login', component: Login, name: 'Login' },
+    { path: '/about', component: About, name: 'About' },
+    { path: '/**', redirectTo: ['Home'] }
 ])
 export class App {
-  name = 'DND-Tool Thing';
-  url = 'https://github.com/Zizekftw/DND-Tool';
+    name = 'DND-Tool Thing';
+    url = 'https://github.com/Zizekftw/DND-Tool';
 
-  constructor() {
+    constructor() {
 
-  }
+    }
 }

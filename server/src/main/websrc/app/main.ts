@@ -15,10 +15,10 @@ import {App} from './app';
  * our Services and Providers into Angular's dependency injection
  */
 document.addEventListener('DOMContentLoaded', function main() {
-  bootstrap(App, [
-    ...HTTP_PROVIDERS,
-    ...ROUTER_PROVIDERS,
-    provide(LocationStrategy, { useClass: PathLocationStrategy })
-  ])
-  .catch(err => console.error(err));
+    bootstrap(App, [
+        ...HTTP_PROVIDERS,
+        ...ROUTER_PROVIDERS,
+        provide(LocationStrategy, { useClass: PathLocationStrategy })
+    ])
+        .catch(err => console.error(err));
 });
